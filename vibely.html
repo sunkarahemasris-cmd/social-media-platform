@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibely - Social Media</title>
+
+<style>
+@font-face{
+    font-family:"Caviar Dreams";
+    src:url("CaviarDreams.ttf") format("truetype");
+    font-weight:600;
+    font-style:normal;
+}
+@font-face{
+    font-family:"Caviar Dreams";
+    src:url("CaviarDreams_Bold.ttf") format("truetype");
+    font-weight:700;
+    font-style:normal;
+}
+
+:root{
+    --navy:#172A46;
+    --navy-dark:#0D1A2B;
+    --navy-light:#263D5D;
+    --beige:#9A7655;
+    --beige-dark:#765638;
+    --beige-light:#B49678;
+    --cream:#E8DED0;
+    --cream-light:#F3EDE5;
+    --text:#172A46;
+    --white:#F8F5F0;
+    --border:#C5B5A3;
+    --shadow:rgba(13,26,43,.15);
+    --danger:#963F3F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body,button,input,textarea,select{font-family:"Caviar Dreams","Trebuchet MS",sans-serif}
+body{background:var(--cream);color:var(--text);min-height:100vh}
+button{cursor:pointer}
+.hidden{display:none!important}
+img{max-width:100%}
+
+/* AUTH */
+#authPage{
+    min-height:100vh;display:flex;justify-content:center;align-items:center;
+    background:linear-gradient(135deg,var(--navy),var(--navy-dark) 55%,var(--beige-dark));
+    padding:20px
+}
+.auth-box{
+    width:450px;max-width:100%;background:var(--cream-light);padding:38px;
+    border-radius:22px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center
+}
+.auth-logo{
+    width:145px;
+    height:145px;
+    object-fit:cover;
+    border-radius:18px;
+    margin-bottom:10px;
+}
+.auth-title{color:var(--navy);font-size:38px;font-weight:700;letter-spacing:2px}
+.auth-subtitle{color:var(--beige-dark);margin:5px 0 25px;font-size:18px}
+.auth-tabs{display:flex;margin-bottom:22px;border-bottom:2px solid var(--border)}
+.auth-tab{flex:1;border:0;background:transparent;padding:12px;font-size:18px;color:var(--beige-dark)}
+.auth-tab.active{color:var(--navy);font-weight:700;border-bottom:3px solid var(--beige)}
+.form-group{text-align:left;margin-bottom:15px}
+.form-group label{display:block;margin-bottom:6px;color:var(--navy);font-size:16px;font-weight:700}
+.form-group input,.form-group textarea,.form-group select{
+    width:100%;border:1px solid var(--border);background:var(--white);
+    padding:12px 14px;border-radius:10px;outline:none;color:var(--navy);font-size:16px
+}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--beige)}
+.primary-btn,.secondary-btn{
+    border:0;border-radius:10px;padding:12px 17px;font-size:16px;font-weight:700
+}
+.primary-btn{width:100%;background:var(--navy);color:var(--cream-light)}
+.primary-btn:hover{background:var(--beige-dark)}
+.secondary-btn{background:var(--beige);color:var(--cream-light)}
+.secondary-btn:hover{background:var(--beige-dark)}
+.auth-message{margin-top:12px;color:var(--danger);font-size:14px}
+.profile-upload{margin-bottom:15px;text-align:center}
+.profile-preview,.blank-avatar{
+    width:90px;height:90px;border-radius:50%;border:3px solid var(--beige);
+    display:block;margin:0 auto 10px;object-fit:cover
+}
+.blank-avatar{background:var(--navy);position:relative}
+.blank-avatar:before{
+    content:"";position:absolute;width:27px;height:27px;border-radius:50%;
+    background:var(--cream-light);top:17px;left:29px
+}
+.blank-avatar:after{
+    content:"";position:absolute;width:48px;height:26px;border-radius:28px 28px 12px 12px;
+    background:var(--cream-light);bottom:14px;left:18px
+}
+.avatar{width:45px;height:45px;border-radius:50%;object-fit:cover;border:2px solid var(--beige);flex:none}
+.avatar.big{width:120px;height:120px;border-width:4px}
+.avatar.story{width:65px;height:65px;border-width:3px;padding:2px}
+.avatar-wrap{width:45px;height:45px;flex:none}
+.avatar-wrap.big{width:120px;height:120px}
+
+/* APP */
+#app{min-height:100vh}
+.navbar{
+    height:70px;background:var(--navy);color:var(--cream-light);display:flex;
+    align-items:center;justify-content:space-between;padding:0 30px;position:sticky;
+    top:0;z-index:100;box-shadow:0 4px 15px var(--shadow)
+}
+.nav-left{display:flex;align-items:center;gap:12px}
+.nav-logo{
+    width:45px;
+    height:45px;
+    object-fit:cover;
+    border-radius:12px;
+}
+.brand{font-size:28px;font-weight:700;letter-spacing:2px}
+.nav-search{width:300px;background:var(--cream-light);border:0;border-radius:20px;padding:10px 16px;outline:none;color:var(--navy)}
+.nav-icons{display:flex;gap:5px}
+.nav-btn{background:transparent;border:0;color:var(--cream-light);padding:9px 11px;border-radius:8px}
+.nav-btn:hover{background:var(--navy-light)}
+
+.main-container{
+    max-width:1250px;margin:auto;padding:30px 20px;
+    display:grid;grid-template-columns:230px 1fr 260px;gap:25px
+}
+.sidebar,.right-card,.create-post,.post,.profile-header,.settings-card,.chat-layout{
+    background:var(--cream-light);border-radius:15px;box-shadow:0 4px 15px var(--shadow)
+}
+.sidebar{padding:15px;height:max-content}
+.sidebar-item{
+    width:100%;border:0;background:transparent;color:var(--navy);padding:13px;
+    border-radius:10px;text-align:left;font-size:16px;margin-bottom:4px
+}
+.sidebar-item:hover,.sidebar-item.active{background:var(--navy);color:var(--cream-light)}
+.content{min-width:0}
+.page{display:none}.page.active{display:block}
+.page-title{color:var(--navy);font-size:30px;margin-bottom:20px}
+
+/* STORIES */
+.stories{display:flex;gap:12px;overflow-x:auto;margin-bottom:20px;padding-bottom:5px}
+.story{min-width:75px;text-align:center;cursor:pointer}
+.story-pic{width:65px;height:65px;border-radius:50%;object-fit:cover;border:3px solid var(--beige);padding:2px}
+.story-name{font-size:13px;color:var(--navy);margin-top:3px}
+
+/* CREATE */
+.create-post{padding:18px;margin-bottom:20px}
+.create-top{display:flex;gap:12px;align-items:center}
+.post-input{flex:1;border:1px solid var(--border);background:var(--white);border-radius:25px;padding:13px 17px;color:var(--navy);outline:none;font-size:16px}
+.create-actions{margin-top:13px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.media-preview{
+    margin-top:14px;border:1px dashed var(--border);border-radius:12px;padding:10px;
+    background:var(--white);position:relative
+}
+.media-preview img,.media-preview video{width:100%;max-height:400px;object-fit:contain;border-radius:9px}
+.preview-label{font-size:13px;color:var(--beige-dark);margin-bottom:7px}
+.remove-preview{position:absolute;right:18px;top:18px;border:0;border-radius:50%;width:32px;height:32px;background:var(--navy);color:white;font-size:18px}
+
+/* POST */
+.post{margin-bottom:20px;overflow:hidden}
+.post-header{display:flex;align-items:center;padding:16px;gap:10px}
+.post-user{flex:1}
+.post-user-name{font-weight:700;color:var(--navy);font-size:17px}
+.post-time{color:var(--beige-dark);font-size:13px}
+.post-menu{border:0;background:transparent;color:var(--navy);font-size:20px}
+.post-text{padding:0 16px 15px;line-height:1.6;color:var(--navy);white-space:pre-wrap}
+.post-image,.post-video{width:100%;max-height:600px;object-fit:cover;display:block;background:#111}
+.post-actions{display:flex;gap:4px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.action-btn{background:transparent;border:0;color:var(--navy);padding:7px 10px;border-radius:8px}
+.action-btn:hover{background:var(--cream)}
+.action-btn.liked{color:var(--beige-dark);font-weight:700}
+.like-count{padding:0 16px 8px;color:var(--navy);font-weight:700}
+.comments{padding:0 16px 10px}
+.comment{padding:5px 0;font-size:13px}
+.comment strong{color:var(--navy)}
+.comment-box{display:flex;padding:10px 16px 16px;gap:8px}
+.comment-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:9px 13px;outline:none;background:var(--white)}
+.comment-send{border:0;background:var(--navy);color:var(--cream-light);border-radius:20px;padding:8px 15px}
+
+/* RIGHT */
+.right-card{padding:18px;margin-bottom:20px}
+.card-title{color:var(--navy);font-size:20px;font-weight:700;margin-bottom:15px}
+.user-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.user-row-info{flex:1;min-width:0}
+.user-row-name{font-weight:700;color:var(--navy)}
+.user-row-small{color:var(--beige-dark);font-size:12px}
+.follow-btn{background:var(--navy);color:var(--cream-light);border:0;border-radius:7px;padding:7px 10px}
+.follow-btn.following{background:var(--beige)}
+
+/* PROFILE */
+.profile-header{padding:30px}
+.profile-top{display:flex;align-items:center;gap:25px}
+.profile-info h2{font-size:30px;color:var(--navy)}
+.profile-info p{color:var(--beige-dark);margin:7px 0;font-size:16px}
+.profile-stats{display:flex;gap:25px;margin-top:15px}
+.stat{text-align:center}.stat-number{display:block;font-weight:700;color:var(--navy);font-size:21px}.stat-label{color:var(--beige-dark)}
+.profile-edit{margin-left:auto;background:var(--navy);color:var(--cream-light);border:0;padding:10px 17px;border-radius:8px}
+.profile-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:20px}
+.grid-post{aspect-ratio:1;background:var(--beige);overflow:hidden;cursor:pointer}
+.grid-post img,.grid-post video{width:100%;height:100%;object-fit:cover}
+.text-grid{padding:15px;color:var(--cream-light);background:var(--navy);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+
+/* CHAT */
+.chat-layout{height:650px;display:grid;grid-template-columns:240px 1fr;overflow:hidden}
+.chat-list{border-right:1px solid var(--border);overflow-y:auto}
+.chat-list-title{padding:17px;font-size:22px;font-weight:700;color:var(--navy)}
+.chat-user{display:flex;gap:10px;align-items:center;padding:12px;cursor:pointer}
+.chat-user:hover,.chat-user.active{background:var(--cream)}
+.chat-area{display:flex;flex-direction:column}
+.chat-header{padding:15px;border-bottom:1px solid var(--border);color:var(--navy);font-size:18px;font-weight:700}
+.messages{flex:1;padding:15px;overflow-y:auto}
+.message{max-width:65%;padding:10px 13px;margin-bottom:10px;border-radius:14px;font-size:13px}
+.message.sent{margin-left:auto;background:var(--navy);color:var(--cream-light);border-bottom-right-radius:3px}
+.message.received{background:var(--cream);color:var(--navy);border-bottom-left-radius:3px}
+.message-time{font-size:9px;opacity:.7;margin-top:3px}
+.chat-input-area{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border)}
+.chat-input{flex:1;border:1px solid var(--border);border-radius:20px;padding:11px 14px;outline:none}
+.chat-send{border:0;background:var(--navy);color:var(--cream-light);padding:9px 17px;border-radius:20px}
+
+/* SEARCH / SETTINGS / NOTIFICATIONS */
+.search-box{width:100%;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--cream-light);outline:none;font-size:17px;margin-bottom:20px}
+.search-result{background:var(--cream-light);padding:15px;border-radius:12px;display:flex;align-items:center;gap:12px;margin-bottom:10px;box-shadow:0 3px 10px var(--shadow)}
+.settings-card{padding:22px;margin-bottom:15px}
+.settings-card h3{color:var(--navy);margin-bottom:15px}
+.notification{display:flex;gap:12px;align-items:center;background:var(--cream-light);padding:15px;margin-bottom:10px;border-radius:12px;box-shadow:0 3px 10px var(--shadow)}
+.notification-text{color:var(--navy)}
+.footer{text-align:center;padding:30px;color:var(--beige-dark);font-size:14px}
+
+/* MODAL / TOAST */
+.modal{position:fixed;inset:0;background:rgba(13,26,43,.65);display:flex;justify-content:center;align-items:center;z-index:200;padding:20px}
+.modal-box{background:var(--cream-light);width:560px;max-width:100%;padding:25px;border-radius:15px;max-height:90vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;margin-bottom:18px}
+.modal-header h2{color:var(--navy)}
+.close-btn{border:0;background:transparent;font-size:25px;color:var(--navy)}
+.toast{position:fixed;right:25px;bottom:25px;background:var(--navy);color:var(--cream-light);padding:13px 20px;border-radius:9px;box-shadow:0 5px 20px var(--shadow);z-index:500}
+.danger-btn{background:var(--danger)!important}
+.small-note{font-size:12px;color:var(--beige-dark);line-height:1.5;margin-top:7px}
+.empty{padding:25px;text-align:center;color:var(--beige-dark);background:var(--cream-light);border-radius:14px}
+
+/* RESPONSIVE */
+@media(max-width:1000px){
+    .main-container{grid-template-columns:190px 1fr}
+    .right-sidebar{display:none}.nav-search{width:200px}
+}
+@media(max-width:700px){
+    .navbar{padding:0 12px}.brand{display:none}.nav-search{width:150px}
+    .main-container{display:block;padding:15px}
+    .sidebar{display:flex;overflow-x:auto;margin-bottom:15px}
+    .sidebar-item{min-width:max-content;margin-right:5px}
+    .profile-top{flex-direction:column;text-align:center}
+    .profile-edit{margin-left:0}
+    .chat-layout{grid-template-columns:1fr}.chat-list{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- AUTH -->
+<div id="authPage">
+    <div class="auth-box">
+        <img src="./vibely.png" class="auth-logo" alt="Vibely Logo">
+             onerror="this.style.display='none'">
+        <div class="auth-title">VIBELY</div>
+        <div class="auth-subtitle">Connect • Share • Discover</div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="showLogin()">Login</button>
+            <button class="auth-tab" onclick="showSignup()">Create Account</button>
+        </div>
+
+        <div id="loginForm">
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter password"
+                       onkeydown="if(event.key==='Enter') login()">
+            </div>
+            <button class="primary-btn" onclick="login()">Login</button>
+            <button style="border:0;background:none;color:var(--beige-dark);margin-top:14px"
+                    onclick="forgotPassword()">Forgot Password?</button>
+        </div>
+
+        <div id="signupForm" class="hidden">
+            <div class="profile-upload">
+                <div id="signupPreview" class="blank-avatar"></div>
+                <input type="file" id="signupPhoto" accept="image/*"
+                       onchange="previewSignupPhoto(event)">
+                <div class="small-note">Profile picture is optional.</div>
+            </div>
+
+            <div class="form-group">
+                <label>Gmail / Email</label>
+                <input type="email" id="signupEmail" placeholder="example@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="signupUsername" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="signupPassword" placeholder="Create password">
+            </div>
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <input type="password" id="signupConfirm" placeholder="Confirm password">
+            </div>
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea id="signupBio" rows="2" placeholder="Tell people about yourself"></textarea>
+            </div>
+            <button class="primary-btn" onclick="signup()">Create Account</button>
+        </div>
+
+        <div id="authMessage" class="auth-message"></div>
+    </div>
+</div>
+
+<!-- APP -->
+<div id="app" class="hidden">
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="./vibely.png" class="nav-logo" alt="Vibely">
+            <span class="brand">VIBELY</span>
+        </div>
+        <input class="nav-search" id="navSearch" placeholder="Search Vibely..."
+               oninput="globalSearch(this.value)">
+        <div class="nav-icons">
+            <button class="nav-btn" onclick="openPage('home')">Home</button>
+            <button class="nav-btn" onclick="openPage('notifications')">🔔</button>
+            <button class="nav-btn" onclick="openPage('chat')">💬</button>
+            <button class="nav-btn" onclick="openProfile()">Profile</button>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <button class="sidebar-item active" onclick="openPage('home')">🏠 Home</button>
+            <button class="sidebar-item" onclick="openPage('search')">🔍 Discover</button>
+            <button class="sidebar-item" onclick="openPage('chat')">💬 Messages</button>
+            <button class="sidebar-item" onclick="openPage('notifications')">🔔 Notifications</button>
+            <button class="sidebar-item" onclick="openProfile()">👤 Profile</button>
+            <button class="sidebar-item" onclick="openPage('settings')">⚙️ Settings</button>
+            <button class="sidebar-item" onclick="openPage('about')">ℹ️ About Vibely</button>
+            <button class="sidebar-item" onclick="logout()">🚪 Logout</button>
+        </aside>
+
+        <main class="content">
+            <!-- HOME -->
+            <section id="homePage" class="page active">
+                <div class="stories" id="stories"></div>
+
+                <div class="create-post">
+                    <div class="create-top">
+                        <div id="createPostPic"></div>
+                        <input class="post-input" id="postText" placeholder="What's on your mind?">
+                    </div>
+
+                    <div id="mediaPreview" class="media-preview hidden"></div>
+
+                    <div class="create-actions">
+                        <label class="secondary-btn">
+                            📷 Photo / 🎥 Video
+                            <input type="file" id="postMedia" accept="image/*,video/*"
+                                   hidden onchange="previewPostMedia(event)">
+                        </label>
+                        <button class="secondary-btn" onclick="createPost()">Post</button>
+                    </div>
+                    <div class="small-note">You can post text, a photo, a video, or any combination.</div>
+                </div>
+
+                <div id="feed"></div>
+            </section>
+
+            <!-- SEARCH -->
+            <section id="searchPage" class="page">
+                <h1 class="page-title">Discover People</h1>
+                <input class="search-box" id="peopleSearch" placeholder="Search username..."
+                       oninput="searchPeople(this.value)">
+                <div id="searchResults"></div>
+            </section>
+
+            <!-- PROFILE -->
+            <section id="profilePage" class="page">
+                <div id="profileContent"></div>
+            </section>
+
+            <!-- CHAT -->
+            <section id="chatPage" class="page">
+                <h1 class="page-title">Messages</h1>
+                <div class="chat-layout">
+                    <div class="chat-list">
+                        <div class="chat-list-title">Chats</div>
+                        <div id="chatUsers"></div>
+                    </div>
+                    <div class="chat-area">
+                        <div class="chat-header" id="chatHeader">Select a person</div>
+                        <div class="messages" id="messages"></div>
+                        <div class="chat-input-area">
+                            <input class="chat-input" id="messageInput" placeholder="Type a message..."
+                                   onkeydown="if(event.key==='Enter') sendMessage()">
+                            <button class="chat-send" onclick="sendMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- NOTIFICATIONS -->
+            <section id="notificationsPage" class="page">
+                <h1 class="page-title">Notifications</h1>
+                <div id="notifications"></div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settingsPage" class="page">
+                <h1 class="page-title">Settings</h1>
+
+                <div class="settings-card">
+                    <h3>Edit Profile</h3>
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input id="editUsername">
+                    </div>
+                    <div class="form-group">
+                        <label>Gmail / Email</label>
+                        <input id="editEmail" type="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea id="editBio" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Change Profile Picture</label>
+                        <input type="file" id="editPhoto" accept="image/*">
+                    </div>
+                    <button class="secondary-btn" onclick="saveProfile()">Save Changes</button>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Change Password</h3>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="newPassword">
+                    </div>
+                    <button class="secondary-btn" onclick="changePassword()">Change Password</button>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Account</h3>
+                    <button class="primary-btn" onclick="logout()">Logout</button>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section id="aboutPage" class="page">
+                <div class="right-card">
+                    <h1 class="page-title">About Vibely</h1>
+                    <p style="line-height:1.8">
+                        <strong>Vibely</strong> is a social media platform designed to help people
+                        connect, share moments, discover new people and communicate.
+                        <br><br>
+                        Users can create accounts, add profile pictures, share text/photo/video
+                        posts, like and comment, follow users, message each other and receive
+                        notifications.
+                        <br><br>
+                        This version is a browser-based project, so account and media data are
+                        stored locally in the browser.
+                    </p>
+                    <br>
+                    <h3 style="color:var(--navy)">Connect • Share • Discover</h3>
+                </div>
+            </section>
+        </main>
+
+        <aside class="right-sidebar">
+            <div class="right-card">
+                <div class="card-title">Suggested for you</div>
+                <div id="suggestions"></div>
+            </div>
+            <div class="right-card">
+                <div class="card-title">Vibely</div>
+                <p style="color:var(--beige-dark)">
+                    Connect with people.<br>Share your world.<br>Discover new vibes.
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <div class="footer">Vibely © 2026 • Connect • Share • Discover</div>
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal hidden">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2 id="modalTitle">Vibely</h2>
+            <button class="close-btn" onclick="closeModal()">×</button>
+        </div>
+        <div id="modalContent"></div>
+    </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script>
+let currentUser=null;
+let selectedChatUser=null;
+let signupPhotoData="";
+let pendingPostMedia="";
+let pendingPostType="";
+
+const BLANK_AVATAR = "data:image/svg+xml;charset=UTF-8," +
+    encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="50" fill="#172A46"/>
+    <circle cx="50" cy="36" r="18" fill="#F3EDE5"/>
+    <path d="M20 83c3-18 15-28 30-28s27 10 30 28" fill="#F3EDE5"/>
+    </svg>`);
+
+function getUsers(){return JSON.parse(localStorage.getItem("vibely_users")||"[]")}
+function saveUsers(x){localStorage.setItem("vibely_users",JSON.stringify(x))}
+function getPosts(){return JSON.parse(localStorage.getItem("vibely_posts")||"[]")}
+function savePosts(x){localStorage.setItem("vibely_posts",JSON.stringify(x))}
+function getNotifications(){return JSON.parse(localStorage.getItem("vibely_notifications")||"[]")}
+function saveNotifications(x){localStorage.setItem("vibely_notifications",JSON.stringify(x))}
+function getMessages(){return JSON.parse(localStorage.getItem("vibely_messages")||"[]")}
+function saveMessages(x){localStorage.setItem("vibely_messages",JSON.stringify(x))}
+
+function avatarHTML(photo,cls="avatar"){
+    if(photo){
+        return `<img src="${escapeAttr(photo)}" class="${cls}" alt="Profile picture"
+                onerror="this.outerHTML=blankAvatarHTML('${cls}')">`;
+    }
+    return blankAvatarHTML(cls);
+}
+function blankAvatarHTML(cls="avatar"){
+    return `<img src="${BLANK_AVATAR}" class="${cls}" alt="Blank profile picture">`;
+}
+function escapeAttr(text){
+    return String(text||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
+}
+
+/* AUTH */
+function showLogin(){
+    document.getElementById("loginForm").classList.remove("hidden");
+    document.getElementById("signupForm").classList.add("hidden");
+    document.querySelectorAll(".auth-tab")[0].classList.add("active");
+    document.querySelectorAll(".auth-tab")[1].classList.remove("active");
+    document.getElementById("authMessage").textContent="";
+}
+function showSignup(){
+    document.getElementById("loginForm").classList.add("hidden");
+    document.getElementById("signupForm").classList.remove("hidden");
+    document.querySelectorAll(".auth-tab")[0].classList.remove("active");
+    document.querySelectorAll(".auth-tab")[1].classList.add("active");
+    document.getElementById("authMessage").textContent="";
+}
+function previewSignupPhoto(event){
+    const file=event.target.files[0]; if(!file)return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+        signupPhotoData=e.target.result;
+        document.getElementById("signupPreview").outerHTML=
+            `<img id="signupPreview" class="profile-preview" src="${escapeAttr(signupPhotoData)}" alt="Profile preview">`;
+    };
+    reader.readAsDataURL(file);
+}
+function signup(){
+    const email=document.getElementById("signupEmail").value.trim();
+    const username=document.getElementById("signupUsername").value.trim();
+    const password=document.getElementById("signupPassword").value;
+    const confirm=document.getElementById("signupConfirm").value;
+    const bio=document.getElementById("signupBio").value.trim();
+    const msg=document.getElementById("authMessage");
+
+    if(!email||!username||!password){msg.textContent="Please fill all required fields.";return}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.textContent="Enter a valid email address.";return}
+    if(password!==confirm){msg.textContent="Passwords do not match.";return}
+
+    const users=getUsers();
+    if(users.some(u=>u.username.toLowerCase()===username.toLowerCase())){
+        msg.textContent="Username already exists.";return
+    }
+    if(users.some(u=>(u.email||"").toLowerCase()===email.toLowerCase())){
+        msg.textContent="This email is already registered.";return
+    }
+
+    users.push({
+        id:Date.now(),username,email,password,bio,
+        photo:signupPhotoData||"",
+        followers:[],following:[],createdAt:Date.now()
+    });
+    saveUsers(users);
+
+    ["signupEmail","signupUsername","signupPassword","signupConfirm","signupBio"].forEach(id=>{
+        document.getElementById(id).value="";
+    });
+    document.getElementById("signupPhoto").value="";
+    document.getElementById("signupPreview").outerHTML=`<div id="signupPreview" class="blank-avatar"></div>`;
+    signupPhotoData="";
+    showLogin();
+    showToast("Account created successfully!");
+}
+function login(){
+    const username=document.getElementById("loginUsername").value.trim();
+    const password=document.getElementById("loginPassword").value;
+    const user=getUsers().find(u=>u.username.toLowerCase()===username.toLowerCase()&&u.password===password);
+    if(!user){document.getElementById("authMessage").textContent="Incorrect username or password.";return}
+    currentUser=user;
+    localStorage.setItem("vibely_current_user",user.id);
+    document.getElementById("authPage").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+    initializeApp();
+}
+function forgotPassword(){
+    const email=prompt("Enter the Gmail/email used for your Vibely account:");
+    if(!email)return;
+    const user=getUsers().find(u=>(u.email||"").toLowerCase()===email.trim().toLowerCase());
+    if(!user){showToast("No Vibely account was found for that email.");return}
+    const code=Math.floor(100000+Math.random()*900000);
+    localStorage.setItem("vibely_reset_code",JSON.stringify({email:user.email,code,expires:Date.now()+10*60*1000}));
+    const entered=prompt("Demo password reset code: "+code+"\n\nEnter the code to continue:");
+    if(String(entered)!==String(code)){showToast("Incorrect reset code.");return}
+    const newPassword=prompt("Enter your new password:");
+    if(!newPassword){showToast("Password reset cancelled.");return}
+    const users=getUsers(), target=users.find(u=>u.id===user.id);
+    target.password=newPassword; saveUsers(users);
+    localStorage.removeItem("vibely_reset_code");
+    showToast("Password reset successfully!");
+}
+function logout(){
+    currentUser=null;
+    localStorage.removeItem("vibely_current_user");
+    document.getElementById("app").classList.add("hidden");
+    document.getElementById("authPage").classList.remove("hidden");
+}
+
+/* INIT/NAV */
+function initializeApp(){
+    refreshCurrentUser();
+    updateEverything();
+}
+function refreshCurrentUser(){
+    const users=getUsers();
+    currentUser=users.find(u=>u.id==localStorage.getItem("vibely_current_user"));
+}
+function openPage(page){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    const target=document.getElementById(page+"Page");
+    if(target)target.classList.add("active");
+    document.querySelectorAll(".sidebar-item").forEach(b=>b.classList.remove("active"));
+
+    if(page==="home")renderFeed();
+    if(page==="search")searchPeople("");
+    if(page==="profile")renderProfile();
+    if(page==="notifications")renderNotifications();
+    if(page==="chat")renderChatUsers();
+    if(page==="settings")loadSettings();
+}
+function openProfile(){openPage("profile");renderProfile()}
+
+/* POST MEDIA */
+function previewPostMedia(event){
+    const file=event.target.files[0];
+    if(!file)return;
+    const reader=new FileReader();
+    reader.onload=e=>{
+        pendingPostMedia=e.target.result;
+        pendingPostType=file.type.startsWith("video/")?"video":"image";
+        const box=document.getElementById("mediaPreview");
+        box.classList.remove("hidden");
+        box.innerHTML=`
+            <div class="preview-label">Preview before posting</div>
+            ${pendingPostType==="video"
+                ? `<video src="${escapeAttr(pendingPostMedia)}" controls></video>`
+                : `<img src="${escapeAttr(pendingPostMedia)}" alt="Post preview">`}
+            <button class="remove-preview" onclick="removePostMedia()">×</button>`;
+    };
+    reader.readAsDataURL(file);
+}
+function removePostMedia(){
+    pendingPostMedia="";pendingPostType="";
+    document.getElementById("postMedia").value="";
+    document.getElementById("mediaPreview").classList.add("hidden");
+    document.getElementById("mediaPreview").innerHTML="";
+}
+function createPost(){
+    const text=document.getElementById("postText").value.trim();
+    if(!text&&!pendingPostMedia){showToast("Write something or add a photo/video.");return}
+    const posts=getPosts();
+    posts.unshift({
+        id:Date.now(),userId:currentUser.id,text,
+        media:pendingPostMedia,mediaType:pendingPostType,
+        likes:[],comments:[],createdAt:Date.now()
+    });
+    savePosts(posts);
+    document.getElementById("postText").value="";
+    removePostMedia();
+    renderFeed();renderProfile();
+    showToast("Post shared!");
+}
+
+/* FEED */
+function renderFeed(){
+    const feed=document.getElementById("feed"),posts=getPosts(),users=getUsers();
+    feed.innerHTML="";
+    if(!posts.length){
+        feed.innerHTML=`<div class="empty"><h2>Welcome to Vibely!</h2><p>Create the first post and start sharing.</p></div>`;
+        return;
+    }
+    posts.forEach(post=>{
+        const user=users.find(u=>u.id==post.userId); if(!user)return;
+        const likes=post.likes||[], comments=post.comments||[];
+        const liked=likes.includes(currentUser.id);
+        const commentsHTML=comments.slice(-3).map(c=>{
+            const cu=users.find(u=>u.id==c.userId);
+            return `<div class="comment"><strong>${escapeHTML(cu?cu.username:"User")}</strong> ${escapeHTML(c.text)}</div>`;
+        }).join("");
+        let media="";
+        if(post.media){
+            media=post.mediaType==="video"
+                ? `<video class="post-video" src="${escapeAttr(post.media)}" controls></video>`
+                : `<img class="post-image" src="${escapeAttr(post.media)}" alt="Post image">`;
+        }else if(post.image){
+            media=`<img class="post-image" src="${escapeAttr(post.image)}" alt="Post image">`;
+        }
+        const del=post.userId==currentUser.id
+            ? `<button class="action-btn" onclick="deletePost(${post.id})">🗑 Delete</button>`:"";
+        feed.innerHTML+=`
+        <article class="post">
+            <div class="post-header">
+                ${avatarHTML(user.photo,"avatar")}
+                <div class="post-user">
+                    <div class="post-user-name">${escapeHTML(user.username)}</div>
+                    <div class="post-time">${timeAgo(post.createdAt)}</div>
+                </div>
+                <button class="post-menu" onclick="viewUser(${user.id})">•••</button>
+            </div>
+            ${post.text?`<div class="post-text">${escapeHTML(post.text)}</div>`:""}
+            ${media}
+            <div class="post-actions">
+                <button class="action-btn ${liked?"liked":""}" onclick="toggleLike(${post.id})">${liked?"♥":"♡"} Like</button>
+                <button class="action-btn" onclick="focusComment(${post.id})">💬 Comment</button>
+                <button class="action-btn" onclick="sharePost(${post.id})">↗ Share</button>
+                ${del}
+            </div>
+            <div class="like-count">${likes.length} ${likes.length===1?"like":"likes"}</div>
+            <div class="comments">${commentsHTML}</div>
+            <div class="comment-box">
+                <input class="comment-input" id="comment-${post.id}" placeholder="Write a comment..."
+                       onkeydown="if(event.key==='Enter') addComment(${post.id})">
+                <button class="comment-send" onclick="addComment(${post.id})">Send</button>
+            </div>
+        </article>`;
+    });
+}
+function toggleLike(postId){
+    const posts=getPosts(),post=posts.find(p=>p.id==postId);if(!post)return;
+    post.likes=post.likes||[];
+    const i=post.likes.indexOf(currentUser.id);
+    if(i===-1){
+        post.likes.push(currentUser.id);
+        if(post.userId!==currentUser.id)addNotification(post.userId,currentUser.username+" liked your post ❤️");
+    }else post.likes.splice(i,1);
+    savePosts(posts);renderFeed();renderNotifications();
+}
+function addComment(postId){
+    const input=document.getElementById("comment-"+postId);if(!input)return;
+    const text=input.value.trim();if(!text)return;
+    const posts=getPosts(),post=posts.find(p=>p.id==postId);if(!post)return;
+    post.comments=post.comments||[];
+    post.comments.push({id:Date.now(),userId:currentUser.id,text,createdAt:Date.now()});
+    savePosts(posts);
+    if(post.userId!==currentUser.id)addNotification(post.userId,currentUser.username+" commented on your post 💬");
+    renderFeed();renderNotifications();
+}
+function focusComment(postId){
+    const input=document.getElementById("comment-"+postId);if(input)input.focus();
+}
+function deletePost(postId){
+    if(!confirm("Delete this post?"))return;
+    savePosts(getPosts().filter(p=>p.id!=postId));
+    renderFeed();renderProfile();showToast("Post deleted.");
+}
+function sharePost(postId){
+    const text="Check out this post on Vibely!";
+    if(navigator.share){
+        navigator.share({title:"Vibely",text}).catch(()=>{});
+    }else if(navigator.clipboard){
+        navigator.clipboard.writeText(text).then(()=>showToast("Post message copied!"));
+    }else showToast(text);
+}
+
+/* STORIES/FOLLOW */
+function renderStories(){
+    const container=document.getElementById("stories"),users=getUsers();
+    container.innerHTML="";
+    users.slice(0,8).forEach(user=>{
+        container.innerHTML+=`
+            <div class="story" onclick="viewUser(${user.id})">
+                ${avatarHTML(user.photo,"story-pic")}
+                <div class="story-name">${escapeHTML(user.username)}</div>
+            </div>`;
+    });
+}
+function toggleFollow(userId){
+    if(userId==currentUser.id)return;
+    const users=getUsers(),me=users.find(u=>u.id==currentUser.id),target=users.find(u=>u.id==userId);
+    if(!target)return;
+    me.following=me.following||[];target.followers=target.followers||[];
+    const i=me.following.indexOf(userId);
+    if(i===-1){
+        me.following.push(userId);
+        if(!target.followers.includes(currentUser.id))target.followers.push(currentUser.id);
+        addNotification(userId,currentUser.username+" started following you 👤");
+        showToast("Following "+target.username);
+    }else{
+        me.following.splice(i,1);
+        const j=target.followers.indexOf(currentUser.id);if(j!==-1)target.followers.splice(j,1);
+        showToast("Unfollowed "+target.username);
+    }
+    saveUsers(users);refreshCurrentUser();updateEverything();
+}
+function renderSuggestions(){
+    const container=document.getElementById("suggestions");if(!container||!currentUser)return;
+    const suggestions=getUsers().filter(u=>u.id!==currentUser.id&&!(currentUser.following||[]).includes(u.id)).slice(0,5);
+    container.innerHTML="";
+    if(!suggestions.length){container.innerHTML=`<p class="small-note">No suggestions right now.</p>`;return}
+    suggestions.forEach(user=>{
+        container.innerHTML+=`
+        <div class="user-row">
+            ${avatarHTML(user.photo,"avatar")}
+            <div class="user-row-info">
+                <div class="user-row-name">${escapeHTML(user.username)}</div>
+                <div class="user-row-small">${(user.followers||[]).length} followers</div>
+            </div>
+            <button class="follow-btn" onclick="toggleFollow(${user.id})">Follow</button>
+        </div>`;
+    });
+}
+
+/* SEARCH */
+function searchPeople(query){
+    const container=document.getElementById("searchResults");if(!container)return;
+    query=(query||"").toLowerCase();
+    const results=getUsers().filter(u=>u.username.toLowerCase().includes(query)&&u.id!=currentUser.id);
+    container.innerHTML="";
+    if(!results.length){container.innerHTML=`<div class="empty">No users found.</div>`;return}
+    results.forEach(user=>{
+        const following=(currentUser.following||[]).includes(user.id);
+        container.innerHTML+=`
+        <div class="search-result">
+            ${avatarHTML(user.photo,"avatar")}
+            <div class="user-row-info">
+                <div class="user-row-name">${escapeHTML(user.username)}</div>
+                <div class="user-row-small">${escapeHTML(user.bio||"Vibely user")}</div>
+            </div>
+            <button class="follow-btn ${following?"following":""}" onclick="toggleFollow(${user.id})">
+                ${following?"Following":"Follow"}
+            </button>
+        </div>`;
+    });
+}
+function globalSearch(query){
+    if(!query.trim())return;
+    openPage("search");
+    document.getElementById("peopleSearch").value=query;
+    searchPeople(query);
+}
+
+/* PROFILE/MODAL */
+function viewUser(userId){
+    const user=getUsers().find(u=>u.id==userId);if(!user)return;
+    const posts=getPosts().filter(p=>p.userId==userId);
+    const following=(currentUser.following||[]).includes(userId);
+    document.getElementById("modalTitle").textContent="@"+user.username;
+    document.getElementById("modalContent").innerHTML=`
+        <div style="text-align:center">
+            ${avatarHTML(user.photo,"avatar big")}
+            <h2 style="color:var(--navy);margin-top:10px">${escapeHTML(user.username)}</h2>
+            <p style="color:var(--beige-dark)">${escapeHTML(user.bio||"No bio yet.")}</p>
+            <div class="profile-stats" style="justify-content:center">
+                <div class="stat"><span class="stat-number">${posts.length}</span><span class="stat-label">Posts</span></div>
+                <div class="stat"><span class="stat-number">${(user.followers||[]).length}</span><span class="stat-label">Followers</span></div>
+                <div class="stat"><span class="stat-number">${(user.following||[]).length}</span><span class="stat-label">Following</span></div>
+            </div>
+            <br>
+            <button class="primary-btn" onclick="toggleFollow(${user.id});closeModal()">${following?"Unfollow":"Follow"}</button>
+        </div>`;
+    document.getElementById("modal").classList.remove("hidden");
+}
+function renderProfile(){
+    if(!currentUser)return;
+    const posts=getPosts().filter(p=>p.userId==currentUser.id);
+    document.getElementById("profileContent").innerHTML=`
+        <div class="profile-header">
+            <div class="profile-top">
+                ${avatarHTML(currentUser.photo,"avatar big")}
+                <div class="profile-info">
+                    <h2>${escapeHTML(currentUser.username)}</h2>
+                    <p>${escapeHTML(currentUser.bio||"No bio yet.")}</p>
+                    <p style="font-size:13px">${escapeHTML(currentUser.email||"")}</p>
+                    <div class="profile-stats">
+                        <div class="stat"><span class="stat-number">${posts.length}</span><span class="stat-label">Posts</span></div>
+                        <div class="stat"><span class="stat-number">${(currentUser.followers||[]).length}</span><span class="stat-label">Followers</span></div>
+                        <div class="stat"><span class="stat-number">${(currentUser.following||[]).length}</span><span class="stat-label">Following</span></div>
+                    </div>
+                </div>
+                <button class="profile-edit" onclick="openPage('settings')">Edit Profile</button>
+            </div>
+        </div>
+        <h2 style="margin-top:25px;color:var(--navy)">My Posts</h2>
+        <div class="profile-grid">
+            ${posts.map(post=>{
+                if(post.media){
+                    return `<div class="grid-post" onclick="openMediaPost(${post.id})">
+                        ${post.mediaType==="video"
+                            ?`<video src="${escapeAttr(post.media)}"></video>`
+                            :`<img src="${escapeAttr(post.media)}" alt="Post">`}
+                    </div>`;
+                }
+                if(post.image){
+                    return `<div class="grid-post"><img src="${escapeAttr(post.image)}" alt="Post"></div>`;
+                }
+                return `<div class="grid-post text-grid">${escapeHTML(post.text)}</div>`;
+            }).join("")}
+        </div>`;
+}
+function openMediaPost(postId){
+    const post=getPosts().find(p=>p.id==postId);if(!post)return;
+    closeModal();renderFeed();
+    setTimeout(()=>document.querySelectorAll(".post").forEach(el=>{
+        if(el.innerHTML.includes(`deletePost(${postId})`))el.scrollIntoView({behavior:"smooth"});
+    }),100);
+}
+
+/* SETTINGS */
+function loadSettings(){
+    if(!currentUser)return;
+    document.getElementById("editUsername").value=currentUser.username;
+    document.getElementById("editEmail").value=currentUser.email||"";
+    document.getElementById("editBio").value=currentUser.bio||"";
+}
+function saveProfile(){
+    const username=document.getElementById("editUsername").value.trim();
+    const email=document.getElementById("editEmail").value.trim();
+    const bio=document.getElementById("editBio").value.trim();
+    const file=document.getElementById("editPhoto").files[0];
+    if(!username||!email){showToast("Username and email cannot be empty.");return}
+    const users=getUsers();
+    if(users.some(u=>u.id!==currentUser.id&&u.username.toLowerCase()===username.toLowerCase())){
+        showToast("Username already exists.");return
+    }
+    if(users.some(u=>u.id!==currentUser.id&&(u.email||"").toLowerCase()===email.toLowerCase())){
+        showToast("Email already belongs to another account.");return
+    }
+    const user=users.find(u=>u.id==currentUser.id);
+    user.username=username;user.email=email;user.bio=bio;
+    if(file){
+        const reader=new FileReader();
+        reader.onload=e=>{
+            user.photo=e.target.result;saveUsers(users);refreshCurrentUser();document.getElementById("editPhoto").value="";
+            updateEverything();showToast("Profile updated!");
+        };
+        reader.readAsDataURL(file);
+    }else{
+        saveUsers(users);refreshCurrentUser();updateEverything();showToast("Profile updated!");
+    }
+}
+function changePassword(){
+    const password=document.getElementById("newPassword").value;
+    if(!password){showToast("Enter a new password.");return}
+    const users=getUsers(),user=users.find(u=>u.id==currentUser.id);
+    user.password=password;saveUsers(users);
+    document.getElementById("newPassword").value="";
+    showToast("Password changed!");
+}
+
+/* NOTIFICATIONS */
+function addNotification(userId,text){
+    const notifications=getNotifications();
+    notifications.unshift({id:Date.now(),userId,text,createdAt:Date.now(),read:false});
+    saveNotifications(notifications);
+}
+function renderNotifications(){
+    const container=document.getElementById("notifications");if(!container||!currentUser)return;
+    const notifications=getNotifications().filter(n=>n.userId==currentUser.id);
+    container.innerHTML="";
+    if(!notifications.length){
+        container.innerHTML=`<div class="empty"><h2>No notifications</h2><p>You're all caught up!</p></div>`;return
+    }
+    notifications.forEach(n=>{
+        container.innerHTML+=`
+        <div class="notification">
+            <img src="${BLANK_AVATAR}" class="avatar" alt="Notification">
+            <div class="notification-text">
+                ${escapeHTML(n.text)}
+                <div style="font-size:12px;color:var(--beige-dark);margin-top:4px">${timeAgo(n.createdAt)}</div>
+            </div>
+        </div>`;
+    });
+}
+
+/* CHAT */
+function renderChatUsers(){
+    const container=document.getElementById("chatUsers");if(!container||!currentUser)return;
+    const users=getUsers().filter(u=>u.id!==currentUser.id);
+    container.innerHTML="";
+    if(!users.length){container.innerHTML=`<div class="small-note" style="padding:15px">Create another account to start a chat.</div>`;return}
+    users.forEach(user=>{
+        container.innerHTML+=`
+        <div class="chat-user ${selectedChatUser&&selectedChatUser.id==user.id?"active":""}" onclick="selectChatUser(${user.id})">
+            ${avatarHTML(user.photo,"avatar")}
+            <strong style="color:var(--navy)">${escapeHTML(user.username)}</strong>
+        </div>`;
+    });
+}
+function selectChatUser(userId){
+    selectedChatUser=getUsers().find(u=>u.id==userId);if(!selectedChatUser)return;
+    document.getElementById("chatHeader").innerHTML=
+        `${avatarHTML(selectedChatUser.photo,"avatar")} <span>${escapeHTML(selectedChatUser.username)}</span>`;
+    renderChatUsers();renderMessages();
+}
+function renderMessages(){
+    if(!selectedChatUser)return;
+    const container=document.getElementById("messages");
+    const messages=getMessages().filter(m=>
+        (m.senderId==currentUser.id&&m.receiverId==selectedChatUser.id)||
+        (m.senderId==selectedChatUser.id&&m.receiverId==currentUser.id));
+    container.innerHTML="";
+    messages.forEach(m=>{
+        const sent=m.senderId==currentUser.id;
+        container.innerHTML+=`<div class="message ${sent?"sent":"received"}">
+            ${escapeHTML(m.text)}
+            <div class="message-time">${timeAgo(m.createdAt)}</div>
+        </div>`;
+    });
+    container.scrollTop=container.scrollHeight;
+}
+function sendMessage(){
+    if(!selectedChatUser){showToast("Select someone to chat with.");return}
+    const input=document.getElementById("messageInput"),text=input.value.trim();if(!text)return;
+    const messages=getMessages();
+    messages.push({id:Date.now(),senderId:currentUser.id,receiverId:selectedChatUser.id,text,createdAt:Date.now()});
+    saveMessages(messages);input.value="";renderMessages();
+}
+
+/* UTIL */
+function closeModal(){document.getElementById("modal").classList.add("hidden")}
+function showToast(message){
+    const toast=document.getElementById("toast");toast.textContent=message;toast.classList.remove("hidden");
+    clearTimeout(window.vibelyToastTimer);
+    window.vibelyToastTimer=setTimeout(()=>toast.classList.add("hidden"),2500);
+}
+function timeAgo(timestamp){
+    const seconds=Math.max(0,Math.floor((Date.now()-timestamp)/1000));
+    if(seconds<60)return"Just now";
+    const minutes=Math.floor(seconds/60);if(minutes<60)return minutes+"m ago";
+    const hours=Math.floor(minutes/60);if(hours<24)return hours+"h ago";
+    return Math.floor(hours/24)+"d ago";
+}
+function escapeHTML(text){
+    const div=document.createElement("div");div.textContent=text||"";return div.innerHTML;
+}
+function updateEverything(){
+    if(!currentUser)return;
+    document.getElementById("createPostPic").innerHTML=avatarHTML(currentUser.photo,"avatar");
+    renderFeed();renderStories();renderSuggestions();renderNotifications();renderChatUsers();renderProfile();
+}
+window.addEventListener("load",()=>{
+    const savedId=localStorage.getItem("vibely_current_user");
+    if(!savedId)return;
+    const user=getUsers().find(u=>u.id==savedId);
+    if(!user)return;
+    currentUser=user;
+    document.getElementById("authPage").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+    initializeApp();
+});
+</script>
+</body>
+</html>
